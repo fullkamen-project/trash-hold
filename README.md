@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Kamen.gg (Tarkov Web Hub) — Технический Паспорт Проекта
 
-## Getting Started
+Данный документ является исчерпывающим техническим руководством для разработчиков и AI-ассистентов. Он описывает архитектуру, структуру данных, методы работы с API и стандарты написания кода для проекта **fullkamengg**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🏗️ 1. Архитектура проекта
+
+Проект построен на базе **Next.js 14+ (App Router)** с использованием паттерна **React Server Components (RSC) + Client Components**. Архитектура сфокусирована на переносе максимальной вычислительной нагрузки на сервер для обеспечения мгновенной отзывчивости на стороне клиента (Zero Client Bloat).
+
+### Ключевые архитектурные решения:
+* **Serverless Frontend API:** Вместо традиционного монолитного бэкенда с локальной базой данных используется подход Headless. Сервер Next.js выступает в роли умного прокси-слоя, агрегирующего данные из внешнего GraphQL API (`api.tarkov.dev`).
+* **Next.js Data Cache:** Глобальные массивы данных (например, 4000+ предметов игры) не загружаются при каждом запросе. Используется нативная кэширующая механика `fetch(url, { next: { revalidate: 3600 } })`. База загружается в оперативную память сервера один раз в час.
+* **Server Actions:** Взаимодействие между клиентским поиском и базой данных происходит через асинхронные серверные экшены (`searchTarkovItemsAction`). Это избавляет от необходимости писать традиционные REST-роуты в папке `/api` и скрывает алгоритмы фильтрации от браузера.
+* **Управление состоянием клиента:** Интерактивные элементы интерфейса полагаются на хук `useTransition` и паттерн Debounce для предотвращения блокировки основного потока (UI) при быстрых запросах.
+
+---
+
+## 🗺️ 2. Карта проекта (Файловая структура)
+
+```text
+src/
+├── app/
+│   ├── (tarkov)/                 # Изолированная группа маршрутов для раздела Tarkov
+│   │   ├── layout.tsx            # Главный макет (навигация, глобальные обертки, StreamStatus)
+│   │   ├── tarkov/
+│   │   │   ├── page.tsx          # Главный дашборд-хаб по игре
+│   │   │   ├── achievements/     # Раздел "Достижения" (интеграция с GraphQL Tarkov.dev)
+│   │   │   ├── hideout/          # Раздел "Убежище" (локальная структура + Tarkov.dev Assets)
+│   │   │   ├── quests/           # Справочник квестов (локальные деревья зависимостей .ts)
+│   │   │   └── tracker/          # Трекер предметов (UI поисковой системы)
+│   │   │       └── page.tsx      # Точка сборки страницы "Радар Предметов"
+│   ├── api/                      # Классические REST-роуты (оставлены для специфичных задач)
+│   │   └── twitch-status/        # Роут проверки состояния трансляции стримера
+├── components/                   # Изолированные UI-компоненты
+│   ├── ItemSearch.tsx            # Умный клиентский радар предметов (Debounce + Transitions)
+│   └── StreamStatus.tsx          # Индикатор прямого эфира Twitch
+├── lib/                          # Ядро бизнес-логики и связи с API
+│   ├── search-actions.ts         # Server Actions (мост между клиентом и серверным ядром)
+│   ├── search-engine.ts          # Интеллектуальный движок поиска (алгоритм скоринга и маппинг)
+│   └── tarkov-api.ts             # Инкапсулированные GraphQL-запросы к Tarkov.dev с кэшированием
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🗄️ 3. Логика базы данных и связи
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Проект использует **комбинированную модель данных**: часть информации хранится статично в кодовой базе (для неизменяемых структур), часть подтягивается динамически из внешнего провайдера (для экономики и метрик).
 
-## Learn More
+### Сущности и их описание:
 
-To learn more about Next.js, take a look at the following resources:
+**1. Предметы (TarkovItem)**
+* **Источник:** Динамический GraphQL-запрос (`tarkov-api.ts`).
+* **Структура:** `id`, `name`, `shortName`, `types` (массив категорий), `gridImageLink`, `lastLowPrice`.
+* **Связь и Трансформация:** Для компенсации недостатков внешнего API используется `STRICT_MAP` (в `search-engine.ts`). Это словарь трансляции сленга в реальные игровые ID. Если пользователь вводит "ксюха", движок мапит это в `exactMatch: "aks-74u"`, присваивает 1000 очков релевантности и принудительно выводит нужный предмет на первое место в выдаче.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**2. Деревья Квестов (Quest)**
+* **Источник:** Локальные файлы конфигурации `src/app/(tarkov)/tarkov/quests/*.ts`.
+* **Структура:** Массив объектов с полями `id`, `title`, `x`, `y` (координаты для визуального графа), `kappa` (флаг обязательности), `parentId` (связь с предыдущим квестом).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**3. Убежище (HideoutZone)**
+* **Источник:** Локальный объект `HIDEOUT_DATA`.
+* **Структура:** Связывает уровни постройки с требованиями. Поле `requirements.items` содержит массивы объектов `{ id: string, count: number }`, где `id` строго соответствует идентификатору предмета из Tarkov.dev API для корректного отображения иконок.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📡 4. API Роуты и Эндпоинты
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Серверные Экшены (Server Actions)
+Вместо классических маршрутов `/api/search` интерфейс обращается напрямую к функциям сервера:
+
+* **Метод:** `searchTarkovItemsAction(query: string) -> Promise<TarkovItem[]>`
+* **Локация:** `src/lib/search-actions.ts`
+* **Логика:**
+  1. Принимает строку `query` от компонента `ItemSearch.tsx`.
+  2. Запрашивает весь массив (4000+ элементов) из оперативной памяти сервера (Next Cache).
+  3. Прогоняет массив через вычислительное ядро `searchItems` (скоринг, проверка на сленг, исключение неподходящих типов).
+  4. Возвращает клиенту обрезанный пакет `results.slice(0, 30)` для предотвращения перегрузки браузера и экономии трафика.
+
+### Интеграция со сторонними API
+* **Провайдер:** `https://api.tarkov.dev/graphql` (POST-запросы).
+* **Параметры:** Вызовы формируются строго через нативный `fetch` внутри `tarkov-api.ts` с передачей тела запроса `{ query: string }`.
+* **Пример запроса к БД (Предметы):**
+  ```graphql
+  query {
+    items(lang: ru) {
+      id name shortName types width height gridImageLink lastLowPrice
+    }
+  }
+  ```
+
+### Внутренние REST Роуты
+* **Эндпоинт:** `GET /api/twitch-status`
+* **Возвращает:** JSON вида `{ "isLive": true, "viewers": 1500 }`.
+* **Логика:** Безопасно изолирует серверные токены Twitch API, отдавая клиентскому компоненту `StreamStatus.tsx` только финальный статус потока.
+
+---
+
+## 🚀 5. Инструкция по развертыванию
+
+Для локального запуска и настройки проекта на сервере выполните следующие шаги:
+
+1. **Клонирование и установка зависимостей:**
+   ```bash
+   git clone <URL_РЕПОЗИТОРИЯ>
+   cd fullkamengg
+   npm install
+   ```
+2. **Переменные окружения:**
+   Создайте файл `.env.local` в корне проекта и заполните необходимые ключи:
+   ```env
+   TWITCH_CLIENT_ID=your_client_id_here
+   TWITCH_CLIENT_SECRET=your_client_secret_here
+   TWITCH_CHANNEL_NAME=your_channel_name
+   ```
+3. **Запуск в режиме разработчика (сборка кэша произойдет автоматически):**
+   ```bash
+   npm run dev
+   ```
+4. **Сборка для Production:**
+   ```bash
+   npm run build
+   npm start
+   ```
+   *Примечание: При выполнении `build` Next.js автоматически выполнит предварительные запросы к Tarkov.dev и сложит базу в `.next/cache`.*
+
+---
+
+## 🤖 6. Гайд для AI-Ассистента (AI Guidelines)
+
+При взаимодействии с кодом данного проекта алгоритмам искусственного интеллекта (включая Gemini Code Assist, GitHub Copilot) необходимо строго соблюдать следующие инженерные и стилистические директивы:
+
+1. **Архитектурные Табу:**
+   * Запрещено создавать громоздкие клиентские компоненты, загружающие большие массивы данных напрямую в браузер.
+   * Запрещено предлагать создание новых маршрутов в директории `src/app/api/`, если задачу можно решить через **Server Actions** (`'use server'`).
+2. **Правила Дизайна и UI (Tailwind CSS):**
+   * Использовать исключительно моноширинные шрифты для числовых данных и заголовков (`font-mono`).
+   * Строго соблюдать цветовую палитру проекта, применяя префикс `kamen-` (например: `bg-kamen-stone`, `text-kamen-action`, `bg-kamen-bg`).
+   * Дизайн должен оставаться бруталистичным и плоским: четкие рамки (`border border-gray-700`), минимум скруглений (`rounded-lg` или `rounded-none`), отсутствие мягких теней.
+3. **Управление состоянием и производительность:**
+   * Ввод пользователя в текстовые поля обязательно должен оборачиваться в таймаут (Debounce 300-500ms) для защиты сервера от DDoS-подобного шквала запросов.
+   * Асинхронные вызовы из клиентских компонентов должны использовать хук `useTransition` и стейт `isPending` для плавной отрисовки интерфейса во время ожидания ответа сервера.
+4. **TypeScript Спецификации:**
+   * Категорический запрет на использование типа `any`. Все внешние ответы API должны быть типизированы через `interface` или `type`.
+   * Допускается использование `unknown` с последующей проверкой типов (Type Guard), если структура стороннего ответа не гарантирована.
+5. **Организация Импортов:**
+   * Использовать абсолютные пути через символ `@/` (например, `import { searchItems } from '@/lib/search-engine'`). Относительные пути (`../../`) запрещены вне пределов одной папки компонента.
