@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        kamen: {
-          dark: '#0D0D0D',   // Глубокий черный фон
+        kamen: { // Это ваш основной цветовой набор
+          dark: '#0D0D0F',   // Глубокий черный фон (теперь #0D0D0F)
           stone: '#1A1A1A',  // Цвет блоков
           slate: '#8E8E8E',  // Серый текст
           action: '#00FF41', // Зеленый акцент (Онлайн)
