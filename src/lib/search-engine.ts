@@ -1,4 +1,4 @@
-import { TarkovItem } from './tarkov-api';
+import { EftItem } from './eft-api';
 
 // Обширный словарь сленга игроков Escape from Tarkov
 // Ключ — то, что вводит юзер (всегда в нижнем регистре). 
@@ -116,7 +116,7 @@ const SLANG_MAP: Record<string, { type?: string, matches?: string[] }> = {
   "ключ": { type: "keys" }
 };
 
-export function searchItems(items: TarkovItem[], query: string): TarkovItem[] {
+export function searchItems(items: EftItem[], query: string): EftItem[] {
   const normalizedQuery = query.toLowerCase().trim();
   const searchTerms = normalizedQuery.split(/\s+/);
 

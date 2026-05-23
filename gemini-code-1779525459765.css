@@ -1,0 +1,111 @@
+/* ==========================================================================
+   🦾 ТАКТИЧЕСКАЯ ЭКОСИСТЕМА "ФУЛЛ КАМЕНЬ" — СИНХРОНИЗАЦИЯ С FIGMA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. ВЕБ-ОПТИМИЗИРОВАННЫЕ ШРИФТЫ (TRANSFONTER ГЕНЕРАЦИЯ)
+   -------------------------------------------------------------------------- */
+@font-face {
+    font-family: 'BlenderPro-Book';
+    src: local('Blender Pro Book'), local('BlenderPro-Book'),
+         url('/fonts/BlenderPro-Book.woff2') format('woff2'),
+         url('/fonts/BlenderPro-Book.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BlenderPro-Medium';
+    src: local('Blender Pro Medium'), local('BlenderPro-Medium'),
+         url('/fonts/BlenderPro-Medium.woff2') format('woff2'),
+         url('/fonts/BlenderPro-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. ДИЗАЙН-ТОКЕНЫ (1-в-1 С ТВОЕЙ ПАЛИТРОЙ ИЗ FIGMA)
+   -------------------------------------------------------------------------- */
+:root {
+    /* 🌑 СЛОИ И ФОНЫ (BACKGROUNDS) */
+    --color-base: #0D0D0F;           /* Base: Самый глубокий фон страницы */
+    --color-card-menu: #161618;      /* Card and Menu: Модульные плашки, карточки игр, выпадающие списки */
+    --color-lines-hover: #222225;    /* Lines and Hovers: Разделители, рамки, поисковая строка, базовый ховер */
+
+    /* 📝 ТИПОГРАФИКА (TEXT COLORS) */
+    --color-text-primary: #F2F2F2;   /* Primary Text: H1. Заголовки, важный вводимый текст */
+    --color-text-secondary: #9CA3AF; /* Secondary Text: H2, p. Описания, ТТХ, неактивные табы */
+    --color-text-muted: #52525B;     /* Muted Text: Плейсхолдеры, топографические паттерны, копирайты */
+
+    /* 🔥 ТАКТИЧЕСКИЕ АКЦЕНТЫ (ACCENT COLORS) */
+    --color-tactical-amber: #E68E25; /* Tactical Amber: Главный акцент (Квесты, Патроны, Карты, рамки, ссылки) */
+    --color-nvg-green: #689963;      /* NVG Green: Вторичный тактический (Убежище, успешные крафты, прибыль) */
+    --color-alert-red: #C24339;      /* Alert Red: Критические алерты, ошибки, статус "Стрим оффлайн" */
+
+    /* 🎮 УНИКАЛЬНЫЕ ИГРОВЫЕ СВЕЧЕНИЯ ДЛЯ ХОВЕРОВ (ИЗ ТВОИХ МАКЕТОВ) */
+    --color-accent-frago: #3E6E8C;   /* Электрический синий тактический неон для Fragmentary Order */
+    
+    --shadow-neon-tarkov: 0 0 25px rgba(230, 142, 37, 0.3), inset 0 0 15px rgba(230, 142, 37, 0.1);
+    --shadow-neon-frago: 0 0 25px rgba(62, 110, 140, 0.35), inset 0 0 15px rgba(62, 110, 140, 0.15);
+
+    /* ⚡ ТАЙМИНГИ ИНТЕРФЕЙСА */
+    --transition-tactical: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Инерционный тактильный отклик */
+}
+
+
+/* --------------------------------------------------------------------------
+   3. ГЛОБАЛЬНЫЕ СТИЛИ ДОКУМЕНТА
+   -------------------------------------------------------------------------- */
+body {
+    margin: 0; padding: 0;
+    background-color: var(--color-base);
+    color: var(--color-text-primary);
+    font-family: 'BlenderPro-Book', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* 🧱 Базовые правила для заголовков */
+h1, h2, h3, .heading-medium {
+    font-family: 'BlenderPro-Medium', sans-serif;
+    color: var(--color-text-primary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase; /* Все заголовки в капсе по дизайну */
+}
+
+p, .text-secondary {
+    font-family: 'BlenderPro-Book', sans-serif;
+    color: var(--color-text-secondary);
+}
+
+/* Скрываем системный скроллбар OBS/Браузера для чистоты интерфейса */
+::-webkit-scrollbar { width: 0; display: none; }
+
+
+/* --------------------------------------------------------------------------
+   4. СЛУЖЕБНЫЕ КЛАССЫ ДЛЯ БЫСТРОЙ СВЯЗИ С FIGMA В GEMINI CODE ASSIST
+   -------------------------------------------------------------------------- */
+/* Если в Фигме у тебя карточка — вешай класс .tarkov-card-base */
+.tarkov-card-base {
+    background-color: var(--color-card-menu);
+    border: 1px solid var(--color-lines-hover);
+    border-radius: 4px;
+    transition: var(--transition-tactical);
+}
+
+/* Эффект ховера для Escape From Tarkov (Загорается Янтарным) */
+.tarkov-card-base.eft-hover:hover {
+    border-color: var(--color-tactical-amber);
+    box-shadow: var(--shadow-neon-tarkov);
+    transform: translateY(-2px);
+}
+
+/* Эффект ховера для FRAGO (Загорается Синим) */
+.tarkov-card-base.frago-hover:hover {
+    border-color: var(--color-accent-frago);
+    box-shadow: var(--shadow-neon-frago);
+    transform: translateY(-2px);
+}

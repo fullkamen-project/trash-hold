@@ -198,7 +198,7 @@ export default function QuestsPage() {
   };
 
   return (
-    <div className="w-full h-screen bg-kamen-bg flex flex-col overflow-hidden select-none relative">
+    <div className="w-full h-screen bg-base flex flex-col overflow-hidden select-none relative">
       <style>{`
         @keyframes ants { to { stroke-dashoffset: -12; } }
         .line-ants { stroke-dasharray: 6, 6; animation: ants 0.8s linear infinite; }
@@ -208,14 +208,14 @@ export default function QuestsPage() {
       `}</style>
 
       {/* КОМПАКТНАЯ ПАНЕЛЬ УПРАВЛЕНИЯ ФУНКЦИЯМИ */}
-      <div className="control-panel absolute top-6 left-6 z-50 bg-kamen-stone/95 border border-white/5 backdrop-blur-md p-4 flex flex-col gap-3 w-[280px] shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-        <div className="flex items-center justify-between border-b border-white/5 pb-2">
-          <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Прогресс квестов</span>
-          <span className="text-[11px] font-mono font-black text-white">{stats.completed}/{stats.total} <span className="text-kamen-action">({stats.percent}%)</span></span>
+      <div className="control-panel absolute top-6 left-6 z-50 bg-card-menu/95 border border-lines-hover backdrop-blur-md p-4 flex flex-col gap-3 w-[280px] shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+        <div className="flex items-center justify-between border-b border-lines-hover pb-2">
+          <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Прогресс квестов</span>
+          <span className="text-[11px] font-mono font-black text-text-primary">{stats.completed}/{stats.total} <span className="text-primary">({stats.percent}%)</span></span>
         </div>
         
         {/* Интерактивный поиск с лупой внутри */}
-        <div className="relative flex items-center bg-black/40 border border-white/10 focus-within:border-kamen-action/50 transition-colors pr-2">
+        <div className="relative flex items-center bg-base/40 border border-lines-hover focus-within:border-primary/50 transition-colors pr-2">
           <input 
             type="text"
             placeholder="ПОИСК КВЕСТА..."
@@ -226,20 +226,20 @@ export default function QuestsPage() {
                 scrollToQuest(searchQuery);
               }
             }}
-            className="w-full bg-transparent px-3 py-2 text-[10px] font-black tracking-wider text-white uppercase placeholder-white/20 focus:outline-none"
+            className="w-full bg-transparent px-3 py-2 text-[10px] font-black tracking-wider text-text-primary uppercase placeholder-text-muted focus:outline-none"
           />
           <div className="flex items-center gap-2">
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery("")} 
-                className="text-white/30 hover:text-white text-[10px] font-bold px-1"
+                className="text-text-muted hover:text-text-primary text-[10px] font-bold px-1"
               >
                 ✕
               </button>
             )}
             <button 
               onClick={() => scrollToQuest(searchQuery)}
-              className="text-white/40 hover:text-kamen-action transition-colors p-1 flex items-center justify-center"
+              className="text-text-muted hover:text-primary transition-colors p-1 flex items-center justify-center"
               title="Найти на карте"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -255,8 +255,8 @@ export default function QuestsPage() {
           onClick={() => setOnlyKappa(!onlyKappa)}
           className={`w-full py-2 text-[9px] font-black uppercase tracking-widest transition-all border ${
             onlyKappa 
-              ? 'bg-kamen-action text-black border-transparent shadow-[0_0_15px_rgba(255,77,0,0.3)]' 
-              : 'bg-transparent border-white/10 text-white/50 hover:text-white hover:border-white/20'
+              ? 'bg-primary text-black border-transparent shadow-[0_0_15px_rgba(230,142,37,0.3)]' 
+              : 'bg-transparent border-lines-hover text-text-secondary hover:text-text-primary hover:border-lines-hover'
           }`}
         >
           {onlyKappa ? '✓ Только КАППА' : 'Фильтр: Все квесты'}
@@ -288,11 +288,11 @@ export default function QuestsPage() {
               }}
               className="flex flex-col items-center w-[220px] relative"
             >
-              <span className="text-white font-black uppercase text-[10px] tracking-[0.2em] opacity-40 mb-4 whitespace-nowrap">
+              <span className="text-text-primary font-black uppercase text-[10px] tracking-[0.2em] opacity-40 mb-4 whitespace-nowrap">
                 {trader.name}
               </span>
               
-              <div className="relative w-[150px] h-[150px] mb-[100px] border border-white/5 bg-kamen-stone/20 select-none pointer-events-none">
+              <div className="relative w-[150px] h-[150px] mb-[100px] border border-lines-hover bg-card-menu/20 select-none pointer-events-none">
                 <Image 
                   src={`/images/traders/${trader.id}.png`} 
                   alt={trader.name} 
@@ -373,12 +373,12 @@ export default function QuestsPage() {
                         transform: `translate(calc(${quest.x}px - 50%), ${quest.y}px)`, 
                         zIndex: 10 
                       }}
-                      className={`absolute w-[220px] p-4 bg-kamen-stone/90 border backdrop-blur-md transition-all duration-300 ${cardOpacity} ${
-                        !isCompleted && matchesSearch && matchesKappa ? 'shadow-[0_10px_40px_rgba(0,0,0,0.6)] border-white/5' : ''
-                      } ${quest.kappa ? 'border-kamen-action/30' : ''}`}
+                      className={`absolute w-[220px] p-4 bg-card-menu/90 border backdrop-blur-md transition-all duration-300 ${cardOpacity} ${
+                        !isCompleted && matchesSearch && matchesKappa ? 'shadow-[0_10px_40px_rgba(0,0,0,0.6)] border-lines-hover' : ''
+                      } ${quest.kappa ? 'border-primary/30' : ''}`}
                     >
                       <div className="flex justify-between items-start gap-3 mb-4">
-                        <span className="text-[10px] font-black text-white uppercase italic leading-tight tracking-tight">
+                        <span className="text-[10px] font-black text-text-primary uppercase italic leading-tight tracking-tight">
                           {quest.title}
                         </span>
                         {quest.kappa && <span className="text-[8px] bg-kamen-action text-black px-1.5 py-0.5 font-bold">KAPPA</span>}
@@ -388,8 +388,8 @@ export default function QuestsPage() {
                         onClick={() => toggleQuest(quest.id)}
                         className={`w-full py-2 text-[9px] font-black uppercase tracking-widest transition-all border ${
                           isCompleted 
-                            ? 'bg-white/5 border-white/10 text-white/20' 
-                            : 'bg-transparent border-white/10 text-white/40 hover:border-kamen-action hover:text-white'
+                            ? 'bg-white/5 border-lines-hover text-text-muted' 
+                            : 'bg-transparent border-lines-hover text-text-secondary hover:border-primary hover:text-text-primary'
                         }`}
                       >
                         {isCompleted ? 'ГОТОВО' : 'ВЫПОЛНИТЬ'}

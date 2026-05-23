@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
-import { searchTarkovItemsAction } from '@/lib/search-actions';
-import { TarkovItem } from '@/lib/tarkov-api';
+import { searchEftItemsAction } from '@/lib/search-actions';
+import { EftItem } from '@/lib/eft-api';
 
 export function ItemSearch() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<TarkovItem[]>([]);
+  const [results, setResults] = useState<EftItem[]>([]);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +17,7 @@ export function ItemSearch() {
         startTransition(async () => {
           try {
             setError(null);
-            const data = await searchTarkovItemsAction(query);
+            const data = await searchEftItemsAction(query);
             console.log(`✅ X-RAY [CLIENT]: Получено ${data.length} результатов.`);
             setResults(data);
           } catch (err) {
@@ -48,19 +48,19 @@ export function ItemSearch() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Поиск предмета (например: салева, m4a1, ledx)..."
-          className="w-full py-4 pr-4 pl-12 bg-kamen-stone border border-gray-700 text-white rounded-lg focus:outline-none focus:border-kamen-action transition-colors font-mono"
+          className="w-full py-4 pr-4 pl-12 bg-card-menu border border-lines-hover text-text-primary rounded-lg focus:outline-none focus:border-primary transition-colors font-blender-book"
         />
-        {isPending && <div className="absolute right-4 top-1/2 -translate-y-1/2"><span className="text-kamen-action animate-pulse font-mono">Радар...</span></div>}
+        {isPending && <div className="absolute right-4 top-1/2 -translate-y-1/2"><span className="text-primary animate-pulse font-blender-medium">Радар...</span></div>}
       </div>
 
       {error && (
-        <p className="text-red-500 text-center py-4 font-mono">{error}</p>
+        <p className="text-destructive text-center py-4 font-blender-medium">{error}</p>
       )}
 
       {!error && results.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {results.map((item) => (
-            <div key={item.id} className="bg-kamen-stone p-4 border border-gray-800 rounded-lg flex flex-col items-center text-center hover:border-gray-600 transition-colors">
+            <div key={item.id} className="bg-card-menu p-4 border border-lines-hover/50 rounded-lg flex flex-col items-center text-center hover:border-lines-hover transition-colors">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={item.gridImageLink} 
@@ -68,15 +68,15 @@ export function ItemSearch() {
                 className="w-16 h-16 object-contain mb-2 drop-shadow-md"
                 loading="lazy"
               />
-              <span className="text-xs text-kamen-action font-semibold block mb-1 font-mono truncate w-full" title={item.name}>{item.shortName}</span>
-              <span className="text-xs text-gray-400 font-mono">{item.lastLowPrice ? `${item.lastLowPrice.toLocaleString('ru-RU')} ₽` : 'Нет цены'}</span>
+              <span className="text-xs text-primary font-blender-medium block mb-1 truncate w-full" title={item.name}>{item.shortName}</span>
+              <span className="text-xs text-text-secondary font-blender-book">{item.lastLowPrice ? `${item.lastLowPrice.toLocaleString('ru-RU')} ₽` : 'Нет цены'}</span>
             </div>
           ))}
         </div>
       )}
       
       {query.length >= 2 && results.length === 0 && !isPending && !error && (
-        <div className="p-4 text-center text-gray-500 font-mono">Предметы не найдены. Попробуйте другой запрос.</div>
+        <div className="p-4 text-center text-text-muted font-blender-book">Предметы не найдены. Попробуйте другой запрос.</div>
       )}
     </div>
   );

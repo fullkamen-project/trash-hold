@@ -1,14 +1,16 @@
 import { ItemSearch } from '@/components/ItemSearch';
 import { HubCard } from './HubCard';
+import { ColorPaletteDevTool } from '@/components/ColorPaletteDevTool';
 
-export default function TarkovPage() {
+export default function EftPage() {
   return (
+    <>
     <div className="w-full max-w-6xl mx-auto py-10 px-4">
       
 
       {/* СТРОКА ПОИСКА */}
       <div className="mb-12 relative z-10"> {/* Added z-10 to ensure search results appear above other content */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-kamen-action" />
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
         <ItemSearch />
       </div>
 
@@ -18,7 +20,7 @@ export default function TarkovPage() {
         
         {/* КАРТЫ (Левый большой блок) */}
         <HubCard
-          href="/tarkov/maps"
+          href="/eft/maps"
           title="Карты"
           description="Подробные топографические данные всех локаций. выходы, спавны и ключи."
           badgeText="[Интерактив]"
@@ -29,7 +31,7 @@ export default function TarkovPage() {
 
         {/* КВЕСТЫ (Правый верхний, на 2 колонки) */}
         <HubCard
-          href="/tarkov/quests"
+          href="/eft/quests"
           title="Квесты"
           description="Пошаговые гайды по выполнению задач всех торговцев."
           badgeText="[!]"
@@ -38,47 +40,49 @@ export default function TarkovPage() {
 
         {/* ПАТРОНЫ */}
         <HubCard
-          href="/tarkov/ammo"
+          href="/eft/ammo"
           title="Патроны"
           description="Таблица пробития и урона"
         />
 
         {/* УБЕЖИЩЕ */}
         <HubCard
-          href="/tarkov/hideout"
+          href="/eft/hideout"
           title="Убежище"
           description="Расчет крафтов и модулей"
         />
 
         {/* ОТСЛЕЖИВАНИЕ ПРЕДМЕТОВ (Низ лево) */}
         <HubCard
-          href="/tarkov/tracker"
+          href="/eft/tracker"
           title="Отслеживание предметов"
           description="Отмечай то, что нужно для квестов и модулей убежища в реальном времени."
         />
 
         {/* КРАФТЫ (Низ центр) */}
         <HubCard
-          href="/tarkov/crafts"
+          href="/eft/crafts"
           title="Крафты"
           description="Выгодные рецепты для Убежища"
         />
 
         {/* БАРТЕРЫ (Низ право) */}
         <HubCard
-          href="/tarkov/barters"
+          href="/eft/barters"
           title="Бартеры"
           description="Обмен предметов у торговцев"
         />
 
       {/* ДОСТИЖЕНИЯ */}
       <HubCard
-        href="/tarkov/achievements"
+        href="/eft/achievements"
         title="Достижения"
         description="Редкие и скрытые внутриигровые награды"
       />
 
       </div>
     </div>
+    <ColorPaletteDevTool />
+    </>
   );
 }

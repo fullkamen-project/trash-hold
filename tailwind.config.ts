@@ -9,12 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        kamen: { // Это ваш основной цветовой набор
-          dark: '#0D0D0F',   // Глубокий черный фон (теперь #0D0D0F)
-          stone: '#1A1A1A',  // Цвет блоков
-          slate: '#8E8E8E',  // Серый текст
-          action: '#00FF41', // Зеленый акцент (Онлайн)
-          danger: '#FF0000', // Красный (Оффлайн)
+        kamen: {
+          dark: 'var(--kamen-dark)',
+          stone: 'var(--kamen-stone)',
+          slate: 'var(--kamen-slate)',
+          action: 'var(--kamen-action)',
+          danger: 'var(--kamen-danger)',
+          heading: 'var(--kamen-heading)',
+          icon: 'var(--kamen-icon)',
         },
       },
     },

@@ -1,4 +1,4 @@
-export interface TarkovItem {
+export interface EftItem {
   id: string;
   name: string;
   shortName: string;
@@ -14,7 +14,7 @@ export interface TarkovItem {
  * Next.js закэширует этот fetch-запрос на сервере, 
  * поэтому поиск по всем предметам будет происходить мгновенно из оперативной памяти.
  */
-export async function getAllTarkovItems(): Promise<TarkovItem[]> {
+export async function getAllEftItems(): Promise<EftItem[]> {
   console.log(`🌐 X-RAY [API]: Выполняю GraphQL fetch к api.tarkov.dev (Кэш: 1 час)`);
   const query = `
     query {
@@ -31,6 +31,7 @@ export async function getAllTarkovItems(): Promise<TarkovItem[]> {
     }
   `;
 
+  // ВАЖНО: Внешний API эндпоинт tarkov.dev остается без изменений!
   const response = await fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -77,6 +78,7 @@ export async function getAmmoData(): Promise<AmmoItem[]> {
     }
   `;
 
+  // ВАЖНО: Внешний API эндпоинт tarkov.dev остается без изменений!
   const response = await fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },

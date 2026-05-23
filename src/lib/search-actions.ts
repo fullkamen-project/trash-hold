@@ -1,14 +1,14 @@
 'use server'
 
-import { getAllTarkovItems } from '@/lib/tarkov-api';
+import { getAllEftItems } from '@/lib/eft-api';
 import { searchItems } from '@/lib/search-engine';
 
-export async function searchTarkovItemsAction(query: string) {
+export async function searchEftItemsAction(query: string) {
   console.log(`\n⚡ X-RAY [SERVER ACTION]: Получен запрос "${query}"`);
   if (!query || query.length < 2) return [];
   
-  console.log(`⏳ X-RAY [SERVER ACTION]: Обращаюсь к базе (getAllTarkovItems)...`);
-  const items = await getAllTarkovItems(); 
+  console.log(`⏳ X-RAY [SERVER ACTION]: Обращаюсь к базе (getAllEftItems)...`);
+  const items = await getAllEftItems(); 
   console.log(`📊 X-RAY [SERVER ACTION]: База загружена. Всего предметов: ${items.length}`);
 
   console.log(`🧠 X-RAY [SERVER ACTION]: Запускаю интеллектуальный движок (search-engine)...`);
