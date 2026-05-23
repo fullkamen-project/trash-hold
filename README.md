@@ -126,7 +126,5 @@ public/
         ├── bg-hover.webp
         ├── bg-inactive.webp
         ├── video-loop.mp4
-        ├── frago-logo-default.webp
-        ├── frago-logo-hover.webp
-        └── frago-logo-inactive.webp
+        └── frago-logo.svg
 ```
