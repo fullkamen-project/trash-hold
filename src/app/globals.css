@@ -39,6 +39,11 @@
   --shadow-neon-eft: 0 14px 28px rgba(230, 142, 37, 0.35);
   --shadow-neon-frago: 0 14px 28px rgba(0, 205, 171, 0.35);
   --shadow-neon-abi: 0 14px 28px rgba(163, 65, 50, 0.35);
+  --shadow-neon-gzw: 0 14px 28px rgba(95, 202, 255, 0.35);
+  --shadow-neon-arcr: 0 14px 28px rgba(138, 134, 255, 0.35);
+  --shadow-neon-mrthn: 0 14px 28px rgba(192, 254, 4, 0.35);
+  --shadow-neon-actmat: 0 14px 28px rgba(255, 168, 0, 0.35);
+  --shadow-neon-wdg: 0 14px 28px rgba(227, 189, 116, 0.35);
 
   --font-blender-book: "BlenderPro-Book", sans-serif;
   --font-blender-medium: "BlenderPro-Medium", sans-serif;
@@ -59,14 +64,41 @@
   --shadow-neon: var(--shadow-neon-abi);
 }
 
+.theme-gzw {
+  --primary: #5FCAFF;
+  --shadow-neon: var(--shadow-neon-gzw);
+}
+
+.theme-arcr {
+  --primary: #8A86FF;
+  --shadow-neon: var(--shadow-neon-arcr);
+}
+
+.theme-mrthn {
+  --primary: #C0FE04;
+  --shadow-neon: var(--shadow-neon-mrthn);
+}
+
+.theme-actmat {
+  --primary: #FFA800;
+  --shadow-neon: var(--shadow-neon-actmat);
+}
+
+.theme-wdg {
+  --primary: #E3BD74;
+  --shadow-neon: var(--shadow-neon-wdg);
+}
+
 @layer base {
   body {
     background-color: var(--color-base);
     color: var(--color-text-primary);
-    /* Тонкий тактический паттерн-сетка на фон */
-    background-image: radial-gradient(var(--color-lines-hover) 1px, transparent 0);
-    background-size: 40px 40px;
-    background-position: -19px -19px;
+
+    /* Точечная тактическая сетка (размер точки ~1px, шаг 53px) на сплошном фоне */
+    background-image: radial-gradient(circle, var(--color-lines-hover) 1px, transparent 1px);
+    background-size: 53px 53px;
+    background-position: center;
+    background-attachment: fixed;
 
     font-family: "BlenderPro-Book", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -89,6 +121,7 @@
   /* Для Webkit-браузеров (Chrome, Safari, Edge) */
   ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
@@ -103,6 +136,11 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: var(--color-primary);
+  }
+
+  /* Угол пересечения вертикального и горизонтального скроллбара */
+  ::-webkit-scrollbar-corner {
+    background-color: var(--color-base);
   }
 }
 
@@ -193,6 +231,12 @@
     }
   }
 
+  /* Плавное появление страницы целиком при навигации */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   /* Базовое состояние для элементов, которые будут анимироваться (скрыты) */
   .animate-on-scroll {
     opacity: 0;
@@ -201,5 +245,16 @@
   /* Класс, который добавляется для запуска анимации */
   .animate-on-scroll.is-visible {
     animation: fade-in-up 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  }
+
+  /* --- Адаптивная типографика для хаба --- */
+  .hub-heading {
+    @apply text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] 
+           mb-0 transition-all duration-300;
+  }
+
+  .hub-description {
+    @apply text-[12px] sm:text-[13px] md:text-[14px] lg:text-[16px] 
+           max-w-[280px] sm:max-w-[380px] md:max-w-[480px] lg:max-w-[600px] transition-all duration-300;
   }
 }

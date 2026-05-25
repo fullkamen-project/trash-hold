@@ -1,6 +1,5 @@
 import { ItemSearch } from '@/components/ItemSearch';
 import { HubCard } from '@/components/HubCard';
-import { ColorPaletteDevTool } from '@/components/ColorPaletteDevTool';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,8 +9,7 @@ export const metadata: Metadata = {
 
 export default function EftPage() {
   return (
-    <>
-    <div className="w-full max-w-6xl mx-auto py-10 px-4">
+    <div className="w-full max-w-[1100px] mx-auto py-10 px-4">
       
 
       {/* СТРОКА ПОИСКА */}
@@ -22,73 +20,123 @@ export default function EftPage() {
 
 
       {/* ОСНОВНАЯ СЕТКА */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr">
+      {/* auto-rows-[160px] гарантирует высоту "прямоугольников". Квадраты займут row-span-2 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[28px] md:auto-rows-[160px] justify-items-center">
         
         {/* КАРТЫ (Левый большой блок) */}
         <HubCard
+          gameId="eft"
+          id="maps"
           href="/eft/maps"
           title="Карты"
-          description="Подробные топографические данные всех локаций. выходы, спавны и ключи."
-          badgeText="[Интерактив]"
-          variant="large"
-          // Пример, как вставить SVG иконку из Figma:
-          // icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="..." fill="currentColor"/></svg>}
+          description="Интерактивные топографические данные"
+          //badgeText="[Интерактив]"
+          variant="square"
+          index={0}
         />
 
         {/* КВЕСТЫ (Правый верхний, на 2 колонки) */}
         <HubCard
+          gameId="eft"
+          id="quests"
           href="/eft/quests"
-          title="Квесты"
-          description="Пошаговые гайды по выполнению задач всех торговцев."
-          badgeText="[!]"
-          customClass="md:col-span-2"
+          title="Задания"
+          description="Подробные инструкции выполнения задач"
+          //badgeText="[!]"
+          index={1}
         />
-
+        
+        {/* СНАРЯЖЕНИЕ */}
+        <HubCard
+          gameId="eft"
+          id="gear"
+          href="/eft/gear"
+          title="Снаряжение"
+          description="Рекомендации по подбору экипировки"
+          index={2}
+        />
+        
         {/* ПАТРОНЫ */}
         <HubCard
+          gameId="eft"
+          id="ammo"
           href="/eft/ammo"
           title="Патроны"
-          description="Таблица пробития и урона"
+          description="Эффективность пробития боеприпасов"
+          index={3}
+        />
+
+        {/* СБОРКИ ОРУЖИЯ */}
+        <HubCard
+          gameId="eft"
+          id="weapons"
+          href="/eft/weapons"
+          title="СБОРКИ"
+          description="Рекомендуемые сборки оружия"
+          index={4}
+        />
+        
+        {/* КРАФТЫ */}
+        <HubCard
+          gameId="eft"
+          id="crafts"
+          href="/eft/crafts"
+          title="Крафты"
+          description="Выгодные крафты в убежище ЧВК"
+          index={5}
+        />
+
+        {/* БАРТЕРЫ */}
+        <HubCard
+          gameId="eft"
+          id="barters"
+          href="/eft/barters"
+          title="Бартеры"
+          description="Прибыльный обмен предметов у торговцев"
+          index={6}
         />
 
         {/* УБЕЖИЩЕ */}
         <HubCard
+          gameId="eft"
+          id="hideout"
           href="/eft/hideout"
           title="Убежище"
-          description="Расчет крафтов и модулей"
+          description="Точный учет необходимых предметов"
+          index={7}
         />
 
-        {/* ОТСЛЕЖИВАНИЕ ПРЕДМЕТОВ (Низ лево) */}
+        {/* СЮЖЕТ */}
         <HubCard
-          href="/eft/tracker"
-          title="Отслеживание предметов"
-          description="Отмечай то, что нужно для квестов и модулей убежища в реальном времени."
+          gameId="eft"
+          id="lore"
+          href="/eft/lore"
+          title="СЮЖЕТ"
+          description="Подробная хронология событий и синопсис игры"
+          index={8}
         />
 
-        {/* КРАФТЫ (Низ центр) */}
+        {/* ПРОГРЕСС */}
         <HubCard
-          href="/eft/crafts"
-          title="Крафты"
-          description="Выгодные рецепты для Убежища"
+          gameId="eft"
+          id="progression"
+          href="/eft/progression"
+          title="Прогресс"
+          description="Интерактивные инструменты для отслеживания прогресса в игре"
+          index={9}
         />
 
-        {/* БАРТЕРЫ (Низ право) */}
+        {/* ВИДЕО */}
         <HubCard
-          href="/eft/barters"
-          title="Бартеры"
-          description="Обмен предметов у торговцев"
+          gameId="eft"
+          id="videos"
+          href="/eft/videos"
+          title="ВИДЕО"
+          description="Актуальные видео по игре, гайды, новости"
+          index={10}
         />
-
-      {/* ДОСТИЖЕНИЯ */}
-      <HubCard
-        href="/eft/achievements"
-        title="Достижения"
-        description="Редкие и скрытые внутриигровые награды"
-      />
 
       </div>
     </div>
-    <ColorPaletteDevTool />
-    </>
   );
 }

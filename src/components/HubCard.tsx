@@ -2,79 +2,72 @@ import Link from "next/link";
 import React from "react";
 
 interface HubCardProps {
-  // --- Основные данные ---
-  title: string;          // Заголовок: "Карты", "Квесты"
-  description: string;    // Описание: "Подробные топографические данные..."
-  href: string;           // Ссылка: "/eft/maps"
-
-  // --- Дизайн и кастомизация (поля из Figma) ---
-  
-  // Иконка. Экспортируй из Figma как SVG и вставь сюда как JSX.
-  // <svg width="24" height="24" viewBox="0 0 24 24">...</svg>
-  icon?: React.ReactNode; 
-  
-  // Текст для шильдика/бейджа в углу.
-  badgeText?: string;     
-  
-  // Вариант размера для сетки. 'large' для карточки 2x1.
-  variant?: 'default' | 'large'; 
-  
-  // Если фон карточки - это сложный SVG паттерн, экспортируй его как код.
-  customSvgBackground?: React.ReactNode;
-  
-  // Для уникальных Tailwind-классов, если нужно (например, md:col-span-2).
-  customClass?: string;
+  gameId: string;         // ID родительской игры (например, 'eft')
+  id: string;             // Идентификатор карточки (для подтягивания иконки {id}-icon.svg)
+  title: string;          // Заголовок
+  description: string;    // Описание
+  href: string;           // Ссылка
+  badgeText?: string;     // Текст для бейджа в углу
+  variant?: 'square' | 'rectangle'; // Адаптивный вид карточки
+  index?: number;         // Индекс для каскадной анимации
 }
 
 export function HubCard({
+  gameId,
+  id,
   title,
   href,
   description,
-  icon,
   badgeText,
-  variant = 'default',
-  customSvgBackground,
-  customClass
+  variant = 'rectangle',
+  index = 0,
 }: HubCardProps) {
-  const isDefault = variant === 'default';
+  const isSquare = variant === 'square';
 
-  // --- Логика для стилей на основе пропсов ---
-  const gridClasses = variant === 'large' ? 'md:row-span-2' : '';
-  const paddingClasses = variant === 'large' ? 'p-8' : 'p-6';
-  const titleSizeClasses = variant === 'large' ? 'text-2xl' : 'text-xl';
-  const descriptionSizeClasses = variant === 'large' ? 'text-sm' : 'text-[10px]';
-
-  // Если карточка маленькая (isDefault), мы отключаем стандартный CSS-фон и рамки, 
-  // передавая управление нашему кастомному SVG из Figma
-  const backgroundClasses = isDefault 
-    ? '' 
-    : 'bg-card-menu/50 border border-lines-hover hover:border-primary/50 overflow-hidden';
+  // Динамические классы для двух видов адаптивных карточек (348x348 и 348x160)
+  const dimensions = isSquare
+    ? 'w-full aspect-square md:w-[348px] md:h-[348px] md:row-span-2'
+    : 'w-full aspect-[348/160] md:w-[348px] md:h-[160px]';
 
   return (
     <Link
       href={href}
-      className={`group relative flex flex-col justify-between transition-all ${backgroundClasses} ${paddingClasses} ${gridClasses} ${customClass || ''}`}
+      className={`group relative flex flex-col bg-card-menu border border-lines-hover rounded-lg overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_30px_rgba(230,142,37,0.15)] hover:-translate-y-1 animate-[fade-in-up_0.6s_ease-out_both] ${dimensions}`}
+      style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* КАСТОМНАЯ SVG-ФИГУРА ИЗ FIGMA */}
-      {isDefault && (
-        <svg className="absolute inset-0 w-full h-full pointer-events-none transition-colors duration-300" preserveAspectRatio="none" viewBox="0 0 348 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Основной фон и обводка */}
-          <path d="M8 0.25H330.687C332.742 0.250065 334.713 1.06641 336.166 2.51953L345.48 11.834C346.934 13.2873 347.75 15.2583 347.75 17.3135V142.687C347.75 144.742 346.934 146.713 345.48 148.166L336.166 157.48C334.713 158.934 332.742 159.75 330.687 159.75H17.3135C15.2583 159.75 13.2873 158.934 11.834 157.48L2.51953 148.166C1.06641 146.713 0.250061 144.742 0.25 142.687V131.164C0.25 129.195 0.999958 127.3 2.34668 125.863L7.01855 120.879C8.45203 119.35 9.25 117.332 9.25 115.236V44.7637C9.25 42.6677 8.45203 40.6502 7.01855 39.1211L2.34668 34.1367C0.999958 32.7003 0.25 30.805 0.25 28.8359V8C0.25 3.71979 3.71979 0.25 8 0.25Z" strokeWidth="0.5" className="fill-card-menu group-hover:fill-card-menu/80 stroke-lines-hover group-hover:stroke-primary transition-all duration-300"/>
-        </svg>
-      )}
+      {/* Иконка карточки (с отступом 21px в правом верхнем углу) */}
+      <div className="absolute top-[21px] right-[21px] w-[32px] h-[32px] transition-transform duration-300 group-hover:scale-110">
+        {/* Используем CSS-маску для автоматического перекрашивания SVG в цвет текущей темы */}
+        <div 
+          className="w-full h-full bg-text-primary opacity-80 group-hover:opacity-100 group-hover:bg-[var(--primary)] transition-colors duration-300"
+          style={{
+            WebkitMaskImage: `url(/icons/${gameId}/${id}-icon.svg)`,
+            WebkitMaskSize: 'contain',
+            WebkitMaskPosition: 'center',
+            WebkitMaskRepeat: 'no-repeat',
+            maskImage: `url(/icons/${gameId}/${id}-icon.svg)`,
+            maskSize: 'contain',
+            maskPosition: 'center',
+            maskRepeat: 'no-repeat',
+          }}
+        />
+      </div>
 
-      {customSvgBackground && (
-        <div className="absolute inset-0 opacity-5 pointer-events-none">{customSvgBackground}</div>
-      )}
-
+      {/* Бейдж (смещен влево, чтобы не перекрывать иконку) */}
       {badgeText && (
-        <div className="absolute top-4 right-6 text-primary/20 font-blender-medium text-[10px] uppercase">{badgeText}</div>
+        <div className="absolute top-[24px] left-[24px] text-[10px] font-blender-medium tracking-widest uppercase text-primary/50 group-hover:text-[var(--primary)] transition-colors">
+          {badgeText}
+        </div>
       )}
 
-      <div className="relative z-10">
-        {icon && <div className="mb-4 text-nvg-green group-hover:text-text-primary transition-colors">{icon}</div>}
-        <h2 className={`${titleSizeClasses} font-black text-text-primary uppercase`}>{title}</h2>
-        <p className={`${descriptionSizeClasses} text-text-secondary uppercase mt-2 opacity-60`}>{description}</p>
+      {/* Текстовый блок (внизу) */}
+      <div className="absolute bottom-[24px] left-[24px] right-[24px] flex flex-col gap-1">
+        <h3 className="text-xl font-blender-medium uppercase tracking-wide text-text-primary group-hover:text-[var(--primary)] transition-colors">
+          {title}
+        </h3>
+        <p className={`text-xs text-text-secondary leading-relaxed ${isSquare ? 'line-clamp-4' : 'line-clamp-2'}`}>
+          {description}
+        </p>
       </div>
     </Link>
   );

@@ -6,17 +6,16 @@ import Image from "next/image";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 // Типы поддерживаемых логотипов:
-type LogoConfig = 
+export type LogoConfig =
   | string // Обычная картинка (fallback)
   | { type: 'multi-state'; default: string; hover: string; inactive: string; width: number; height: number; } // Многослойная (EFT)
   | { type: 'mask'; src: string; width: number; height: number; }; // Динамическая SVG-маска (FRAGO, ABI)
 
 // Define the type for a single game object
-type Game = {
+export type Game = {
   id: string;
   title: string;
   subtitle: string;
-  status: string;
   bg: string;
   bgHover: string;
   bgInactive: string;
@@ -68,7 +67,7 @@ export function GameCard({ game, isLoading, index }: GameCardProps) {
       onClick={(e) => {
         if (game.isInactive) e.preventDefault();
       }}
-      className={`col-span-2 h-[564px] relative overflow-hidden group tactical-card-base ${game.hoverClass} ${game.themeClass} ${game.isInactive ? "is-inactive cursor-not-allowed" : ""}
+      className={`w-full aspect-[348/564] max-w-[348px] shrink-0 relative overflow-hidden group tactical-card-base ${game.hoverClass} ${game.themeClass} ${game.isInactive ? "is-inactive cursor-not-allowed" : ""}
                   ${isLoading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
       style={{
         // Задержка появления карточек после исчезновения прелоадера (500ms) + эффект "волны" (150ms на карту)
@@ -85,7 +84,7 @@ export function GameCard({ game, isLoading, index }: GameCardProps) {
         src={game.isInactive ? game.bgInactive : game.bg}
         alt={`${game.title} background`}
         fill
-        sizes="348px"
+        sizes="(max-width: 768px) 80vw, 348px"
         priority={index < 2} // Prioritize loading for the first two cards
         className={`object-cover transition-all duration-700 ${game.isInactive ? "grayscale brightness-50" : ""}`}
       />
@@ -97,7 +96,7 @@ export function GameCard({ game, isLoading, index }: GameCardProps) {
             src={game.bgHover}
             alt={`${game.title} hover background`}
             fill
-            sizes="348px"
+            sizes="(max-width: 768px) 80vw, 348px"
             className="object-cover z-0"
           />
           {!videoError && (
@@ -140,7 +139,7 @@ export function GameCard({ game, isLoading, index }: GameCardProps) {
       {/* Слой 4: Интерфейс на жестких Figma-координатах */}
       <div className="absolute inset-0 z-30 pointer-events-none">
         <div
-          className={`absolute left-[46px] top-[440px] w-[256px] h-[96px] flex items-center justify-center`}
+          className="absolute left-0 top-[78.01%] w-full h-[17.02%] flex items-center justify-center"
         >
           {typeof game.logo === "string" ? (
             <Image

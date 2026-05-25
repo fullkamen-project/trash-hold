@@ -1,12 +1,19 @@
 import { PlaceholderPage } from "@/components/PlaceholderPage";
+import type { Metadata } from "next";
 
-export default function AbiPage() {
+export const metadata: Metadata = {
+  title: "FRAGO | В разработке",
+};
+
+export default function FragoPage() {
   return (
     <PlaceholderPage
-      themeClass="theme-abi"
-      logoSrc="/games/abi/logo.svg"
-      logoAlt="Arena Breakout: Infinite"
-      description="Раздел тактического симулятора находится в стадии сбора разведданных. Ожидайте обновления систем."
+      themeClass="theme-frago"
+      logoSrc="/games/frago/frago-logo.svg"
+      logoAlt="FRAGO"
+      description="Тактический шутер 5х5"
+      bgImage="/games/frago/bg.webp"
+      bgVideo="/games/frago/video-loop.webm"
     />
   );
 }

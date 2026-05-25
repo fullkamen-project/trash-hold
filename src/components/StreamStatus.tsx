@@ -55,11 +55,17 @@ export default function StreamStatus() {
     glow: ''
   };
 
-  if (isLoading) {
-    return null; // Не рендерим компонент, пока не получен первый статус
-  }
+  // Настройки для состояния ЗАГРУЗКИ (Серый, нейтральный)
+  const loadingStyles = {
+    border: 'border-white/10',
+    bg: 'bg-white/5',
+    shadow: '',
+    dot: 'bg-white/20 animate-pulse',
+    text: 'СИНХРОНИЗАЦИЯ...',
+    glow: ''
+  };
 
-  const s = isLive ? liveStyles : offlineStyles;
+  const s = isLoading ? loadingStyles : (isLive ? liveStyles : offlineStyles);
 
   return (
     <a 

@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* --- 1. ШРИФТЫ (Раздел 1: Стек технологий) --- */
+@font-face {
+  font-family: 'BlenderPro-Book';
+  src: url('/fonts/BlenderPro-Book.woff2') format('woff2'),
+       url('/fonts/BlenderPro-Book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BlenderPro-Medium';
+  src: url('/fonts/BlenderPro-Medium.woff2') format('woff2'),
+       url('/fonts/BlenderPro-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- 2. ДИЗАЙН-ТОКЕНЫ TAILWIND V4 --- */
+@theme {
+  /* Основная палитра Figma (Раздел 2) */
+  --color-base: #0D0D0F;
+  --color-card-menu: #161618;
+  --color-lines-hover: #222225;
+  --color-text-primary: #F2F2F2;
+  --color-text-secondary: #9CA3AF;
+  --color-text-muted: #52525B;
+
+  /* Динамический акцент (связывается с var(--primary) на корне) */
+  --color-primary: var(--primary);
+
+  /* Шрифты */
+  --font-blender-book: 'BlenderPro-Book', sans-serif;
+  --font-blender-medium: 'BlenderPro-Medium', sans-serif;
+}
+
+@layer base {
+  :root {
+    /* Акцент по умолчанию: EFT (Янтарный) */
+    --primary: #E68E25;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-blender-book);
+  }
+
+  /* --- 3. ИГРОВЫЕ АКЦЕНТЫ (Раздел 3) --- */
+  .theme-frago { --primary: #00CDAB; }
+  .theme-abi { --primary: #a34132; }
+  .theme-gzw { --primary: #5FCAFF; }
+  .theme-actmat { --primary: #FFA800; }
+  .theme-arcr { --primary: #8A86FF; }
+  .theme-mrthn { --primary: #C0FE04; }
+  .theme-wdg { --primary: #E3BD74; }
+}
+
+@layer components {
+  /* --- 4. ТАКТИЧЕСКАЯ СЕТКА (Раздел 4: Геометрия) --- */
+  .tactical-grid {
+    display: grid;
+    /* На FullHD это создаст строгие колонки по 160px */
+    grid-template-columns: repeat(6, 160px);
+    gap: 28px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @media (max-width: 1150px) {
+    .tactical-grid {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+  }
+}
