@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { getHeaderConfig } from '@/data/headerConfig';
 import Link from 'next/link';
 import { searchEftItemsAction } from '@/actions/search-actions';
-import { EftItem } from '@/lib/eft-api';
+import { SearchItemCard, EftItem } from './SearchItemCard';
+import { SearchEmptyState } from './SearchEmptyState';
 
 export function TacticalSearch() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,7 +70,8 @@ export function TacticalSearch() {
         startTransition(async () => {
           try {
             const data = await searchEftItemsAction(query);
-            setItemResults(data);
+            // Защита от краша: проверяем, что data это массив
+            setItemResults(Array.isArray(data) ? (data as unknown as EftItem[]) : []);
           } catch (err) {
             console.error("Ошибка при поиске предметов:", err);
             setItemResults([]);
@@ -115,7 +117,8 @@ export function TacticalSearch() {
 
       {/* Выпадающее меню результатов */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-card-menu/95 backdrop-blur-xl border border-primary/50 rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-[fade-in-up_0.2s_ease-out_both]">
+        // Расширяем контейнер, чтобы вместить сетку (до 1100px), центрируя его относительно инпута
+        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[96vw] max-w-[1100px] mt-2 bg-card-menu/95 backdrop-blur-xl border border-primary/50 rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-[fade-in-up_0.2s_ease-out_both]">
           
           <div className="max-h-[450px] overflow-y-auto">
             
@@ -157,34 +160,14 @@ export function TacticalSearch() {
                     База предметов EFT
                   </span>
                 </div>
-                <ul>
-                  {/* Ограничиваем выдачу до 12 предметов, чтобы не перегружать дропдаун */}
-                  {itemResults.slice(0, 12).map((item) => (
-                    <li key={item.id}>
-                      <div className="flex items-center justify-between px-4 py-2 hover:bg-primary/10 transition-colors group/item cursor-default">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-base border border-lines-hover rounded flex items-center justify-center p-1 shrink-0">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={item.gridImageLink} alt={item.name} className="max-w-full max-h-full object-contain" />
-                          </div>
-                          <div className="flex flex-col min-w-0">
-                            <span className="font-blender-medium uppercase text-sm text-text-primary group-hover/item:text-primary transition-colors truncate">
-                              {item.shortName}
-                            </span>
-                            <span className="text-[10px] text-text-secondary truncate max-w-[180px] sm:max-w-[240px]">
-                              {item.name}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0 ml-2">
-                          <span className="font-blender-medium text-primary text-sm whitespace-nowrap">
-                            {item.lastLowPrice ? `${item.lastLowPrice.toLocaleString('ru-RU')} ₽` : '---'}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                <div className="px-4 pb-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-[28px] mt-4 justify-items-center">
+                    {/* Выводим до 12 карточек с помощью нового компонента */}
+                    {itemResults.slice(0, 12).map((item) => (
+                      <SearchItemCard key={item.id} item={item} />
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
@@ -200,11 +183,8 @@ export function TacticalSearch() {
 
             {/* СОСТОЯНИЕ: НИЧЕГО НЕ НАЙДЕНО */}
             {query.length > 0 && filteredResults.length === 0 && itemResults.length === 0 && !isPending && (
-              <div className="px-4 py-8 text-center flex flex-col items-center gap-2">
-                <Search className="w-6 h-6 text-text-muted opacity-50" />
-                <span className="text-xs text-text-muted font-blender-medium uppercase tracking-widest">
-                  Сектор чист. Совпадений не найдено.
-                </span>
+              <div className="p-4">
+                <SearchEmptyState />
               </div>
             )}
           </div>

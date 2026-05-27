@@ -6,7 +6,6 @@ import Image from "next/image";
 import { GameCard } from "@/components/ui/GameCard";
 import { GAMES_DATA } from "../data/games";
 import { Carousel } from "@/components/ui/Carousel";
-import Footer from "@/components/layout/Footer";
 import { fetchLatestYouTubeVideos, type YouTubeVideo } from "@/actions/youtube";
 
 // Актуальные видео с каналов Fullkamen и Battlestate Games
@@ -129,9 +128,6 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-
-      {/* Футер */}
-      <Footer />
     </div>
   );
 }

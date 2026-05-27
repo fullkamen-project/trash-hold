@@ -20,9 +20,7 @@ export function Header() {
   const config = getHeaderConfig(pathname || '');
 
   return (
-    // Корневой тег header получает класс темы (например, theme-eft), 
-    // который задает CSS-переменную --primary для всех вложенных компонентов
-    <header className={`w-full bg-card-menu/80 backdrop-blur-xl border-b border-lines-hover sticky top-0 z-50 transition-colors duration-500 theme-${gameId}`}>
+    <header className="w-full bg-card-menu/80 backdrop-blur-xl border-b border-lines-hover sticky top-0 z-50 transition-colors duration-500">
       
       {/* ================= СТРОКА 1: Глобальная навигация ================= */}
       <div className="border-b border-lines-hover/50">
@@ -64,7 +62,7 @@ export function Header() {
         {/* Слева: Динамический логотип текущей игры (с перекраской через маску) */}
         <Link href={`/${gameId}`} className="flex-shrink-0 group outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm" title={`Вернуться в хаб ${gameId.toUpperCase()}`}>
           <div 
-            className="w-[100px] h-[24px] bg-text-primary opacity-80 group-hover:opacity-100 group-hover:bg-[var(--primary)] transition-all duration-300"
+            className="w-[100px] h-[24px] bg-text-primary opacity-80 group-hover:opacity-100 group-hover:bg-primary transition-all duration-300"
             style={{
               maskImage: `url(/games/${gameId}/${gameId}-logo.svg)`,
               WebkitMaskImage: `url(/games/${gameId}/${gameId}-logo.svg)`,

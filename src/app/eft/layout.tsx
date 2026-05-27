@@ -6,7 +6,7 @@ export default function EftLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="flex flex-col w-full">
       {/* Фиксируем ширину всей страницы через 100vw. 
         Это гарантирует, что шапка займет одинаковую площадь 
         и на интерактивной карте квестов, и на страницах со скроллом.
@@ -18,12 +18,10 @@ export default function EftLayout({
         }
       `}</style>
 
-      {/* Единый глобальный заголовок, который сам понимает, в какой игре находится */}
-      
-      <main className="flex-grow">
+      <div className="flex-grow">
         <Breadcrumbs />
         {children}
-      </main>
+      </div>
     </div>
   );
 }
