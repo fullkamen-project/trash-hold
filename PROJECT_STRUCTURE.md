@@ -15,6 +15,14 @@ c:\Users\vadim\Desktop\fullkamengg\
 └── PROJECT_STRUCTURE.md       # (Текущий файл) Карта файлов и директорий
 ```
 
+## 📂 Статические файлы (public)
+```text
+public/
+├── icons/                 # Огромная структурированная база системных и внутриигровых иконок
+├── fonts/                 # Локальные шрифты (BlenderPro)
+└── games/                 # Ассеты для хаба (обложки, видео, логотипы игр)
+```
+
 ## 📂 Исходный код (src)
 ```text
 src/
@@ -35,6 +43,15 @@ src/
 ├── components/
 │   ├── layout/                # Глобальный каркас приложения
 │   │   ├── Header.tsx         # Умная шапка сайта (2 строки)
+│   │   ├── header-modules/    # Микро-модули для сборки Хедера
+│   │   │   ├── PlatformLogo.tsx
+│   │   │   ├── HeaderNavigation.tsx
+│   │   │   ├── GameLogo.tsx   # Интерактивный GameSwitcher
+│   │   │   ├── TacticalSearch.tsx
+│   │   │   ├── PlayerTelemetry.tsx
+│   │   │   ├── StreamStatus.tsx
+│   │   │   ├── NewbieButton.tsx
+│   │   │   └── NewbieModal.tsx
 │   │   └── Footer.tsx         # Подвал сайта
 │   ├── ui/                    # Переиспользуемые "глупые" компоненты (Dumb components)
 │   │   ├── NavLink.tsx        # Ссылка с подсветкой активного состояния
@@ -42,10 +59,6 @@ src/
 │   │   ├── GameCard.tsx       # Карточка игры для главной страницы
 │   │   ├── Breadcrumbs.tsx    # Хлебные крошки (EFT Хаб / Прогресс)
 │   │   └── Carousel.tsx       # Свайп-карусель
-│   ├── features/              # Сложные "умные" виджеты (Smart components)
-│   │   ├── TacticalSearch.tsx # Глобальный тактический поиск (CMD+K) и База EFT
-│   │   ├── PlayerTelemetry.tsx# Телеметрия игрока (LVL, EXP, Баланс)
-│   │   └── StreamStatus.tsx   # Индикатор стрима Twitch
 │   ├── providers/             # Провайдеры контекста
 │   │   └── ThemeProvider.tsx  # Управление глобальной темой (классы theme-*)
 │   ├── ColorPaletteDevTool.tsx# Инструмент разработчика для настройки палитры "на лету"

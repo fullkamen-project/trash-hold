@@ -58,18 +58,6 @@ export default function HomePage() {
       {/* Уменьшен отступ сверху для телефонов (12px), чтобы оставить больше пространства */}
       <main className="flex flex-grow w-full flex-col items-center overflow-x-hidden pt-[12px] sm:pt-[21px] md:pt-[32px] lg:pt-[42px] pb-8">
         
-        {/* Логотип проекта */}
-        <Link href="/" className="group flex items-center justify-center z-10 relative mb-6 lg:mb-[30px] shrink-0" title="На главную">
-          <Image
-            src="/images/cta-logo.svg"
-            alt="ЦТА Лого"
-            width={160}
-            height={56}
-            className="w-[120px] md:w-[160px] h-auto object-contain transition-all duration-300 group-hover:brightness-125"
-            priority
-          />
-        </Link>
-
         {/* Текстовый блок между логотипом и каруселью */}
         {/* Отступ снизу (mb) сделан минимальным, так как карусель уже имеет свой внутренний отступ сверху (py-[42px]) для теней */}
         <div className="text-center z-10 px-4 mb-12 sm:mb-16 lg:mb-20 shrink-0 flex flex-col items-center w-full">
