@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ProgressionPage() {
   return (
-    <div className="w-full max-w-[1100px] mx-auto py-10 px-4">
+    <div className="w-full max-w-[1132px] mx-auto py-10 px-4">
       
       {/* Заголовок страницы с анимацией появления */}
       <div className="mb-12 animate-[fade-in-up_0.4s_ease-out_both]">

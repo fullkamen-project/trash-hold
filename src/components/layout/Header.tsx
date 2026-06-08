@@ -43,10 +43,10 @@ export function Header() {
 
   return (
     <>
-      <header className="w-full bg-base sticky top-0 z-50 transition-colors duration-500 pt-[clamp(12px,1.09vw,21px)] pb-[clamp(12px,1.09vw,21px)] px-4 flex flex-col gap-[clamp(12px,1.09vw,21px)]">
+      <header className={`w-full bg-base sticky top-0 z-50 transition-colors duration-500 pt-[clamp(12px,1.09vw,21px)] pb-[clamp(12px,1.09vw,21px)] px-4 flex flex-col gap-[clamp(12px,1.09vw,21px)] theme-${gameId}`}>
       
       {/* ================= СТРОКА 1: Глобальная навигация ================= */}
-      <div className="tactical-grid items-center min-h-[64px] gap-y-4">
+      <div className="tactical-grid items-center min-h-[64px] gap-y-4 relative">
         {isHomePage ? (
           <div className="col-span-2 md:col-span-4 xl:col-span-6 flex justify-center">
             {features.showPlatformLogo && <PlatformLogo />}
@@ -60,9 +60,9 @@ export function Header() {
               </div>
             )}
 
-            {/* По центру: Динамическое меню текущей игры */}
+            {/* Слева (после логотипа): Динамическое меню текущей игры */}
             {features.showNavigation && (
-              <div className="hidden xl:flex xl:col-span-4 justify-center order-3 xl:order-2">
+              <div className="hidden xl:flex xl:col-span-4 justify-start order-3 xl:order-2">
                 <HeaderNavigation menuItems={config.menuItems} />
               </div>
             )}

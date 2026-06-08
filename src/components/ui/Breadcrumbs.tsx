@@ -3,29 +3,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
+import { getHeaderConfig } from '@/data/headerConfig';
 
-// Маппинг сегментов URL на человекочитаемые названия
-const BREADCRUMB_NAMES: { [key: string]: string } = {
-  eft: 'EFT Хаб',
-  progression: 'Прогресс',
-  achievements: 'Достижения',
-  tracker: 'Трекер',
-  keepitems: 'Нужные предметы',
-  maps: 'Карты',
-  quests: 'Задания',
-  ammo: 'Патроны',
-  hideout: 'Убежище',
-  crafts: 'Крафты',
-  barters: 'Бартеры',
-  gear: 'Снаряжение',
-  weapons: 'Сборки',
-  lore: 'Сюжет',
-  videos: 'Видео',
-};
 
 export function Breadcrumbs() {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean); // /eft/progression -> ['eft', 'progression']
+
+  // Подтягиваем словарь крошек из конфига текущей игры
+  const config = getHeaderConfig(pathname || '');
+  const breadcrumbNames = config.breadcrumbNames || {};
 
   // Не показываем крошки на главной странице раздела /eft
   if (segments.length <= 1) {
@@ -39,7 +26,7 @@ export function Breadcrumbs() {
         {segments.map((segment, index) => {
           const href = `/${segments.slice(0, index + 1).join('/')}`;
           const isLast = index === segments.length - 1;
-          const name = BREADCRUMB_NAMES[segment] || segment;
+          const name = breadcrumbNames[segment] || segment;
 
           return (
             <Fragment key={href}>

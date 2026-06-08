@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { Command, ArrowRight, Loader2 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { getHeaderConfig } from '@/data/headerConfig';
+import { getHeaderConfig, type MenuItem } from '@/data/headerConfig';
 import Link from 'next/link';
 import { searchEftItemsAction } from '@/actions/search-actions';
 import { SearchItemCard, EftItem } from './SearchItemCard';
@@ -58,10 +58,19 @@ export function TacticalSearch() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Фильтруем пункты меню на основе ввода (Быстрая навигация)
-  const filteredResults = config.menuItems.filter(item => 
-    item.label.toLowerCase().includes(query.toLowerCase())
-  );
+  // Собираем плоский массив всех пунктов (включая вложенные), чтобы поиск находил локации и т.д.
+  const allMenuItems = config.menuItems.reduce((acc: MenuItem[], item) => {
+    acc.push(item);
+    if (item.children) {
+      acc.push(...item.children);
+    }
+    return acc;
+  }, []);
+
+  // Если запрос пуст — показываем только основные разделы. Иначе ищем по всем пунктам.
+  const filteredResults = query.trim().length === 0
+    ? config.menuItems
+    : allMenuItems.filter(item => item.label.toLowerCase().includes(query.toLowerCase()));
 
   // Эффект для дебаунса и поиска предметов
   useEffect(() => {
@@ -88,11 +97,11 @@ export function TacticalSearch() {
   return (
     <div className="relative w-full max-w-[724px]" ref={dropdownRef}>
       {/* Строка поиска (Обертка) */}
-      <div className="group flex items-center justify-between w-full h-14 px-3.5 bg-black/20 rounded border border-[#222225] overflow-hidden transition-colors duration-300 focus-within:border-primary">
+      <div className="group flex items-center justify-between w-full h-14 px-3.5 bg-black/20 rounded border border-[#222225] overflow-hidden transition-colors duration-300 focus-within:border-[var(--primary)]">
         
         {/* Левая иконка (Лупа) */}
         <div 
-          className="icon-mask w-6 h-6 flex-shrink-0 bg-zinc-600 transition-colors duration-300 group-focus-within:bg-primary"
+          className="icon-mask w-6 h-6 flex-shrink-0 text-[#222225] transition-colors duration-300 group-focus-within:text-[var(--primary)]"
           style={{ WebkitMaskImage: 'url(/icons/eft/search-icon.svg)', maskImage: 'url(/icons/eft/search-icon.svg)', maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }}
         />
         
@@ -107,12 +116,12 @@ export function TacticalSearch() {
           }}
           onFocus={() => setIsOpen(true)}
           placeholder="ГЛОБАЛЬНЫЙ ТАКТИЧЕСКИЙ ПОИСК..."
-          className="flex-1 h-full bg-transparent outline-none px-4 text-center uppercase font-blender-medium text-lg text-zinc-600 placeholder:text-zinc-600 focus:text-primary placeholder:group-focus-within:text-primary"
+          className="flex-1 h-full bg-transparent outline-none px-4 text-center uppercase font-blender-medium text-lg text-[#222225] placeholder:text-[#222225] focus:text-[var(--primary)] placeholder:group-focus-within:text-[var(--primary)]"
         />
         
         {/* Правая иконка (Хоткей CTRL+Q) */}
         <div 
-          className="icon-mask w-10 h-5 flex-shrink-0 bg-zinc-600 transition-colors duration-300 group-focus-within:bg-primary group-focus-within:opacity-50"
+          className="icon-mask w-10 h-5 flex-shrink-0 text-[#222225] transition-colors duration-300 group-focus-within:text-[var(--primary)] group-focus-within:opacity-50"
           style={{ WebkitMaskImage: 'url(/icons/eft/ctrl-q-icon.svg)', maskImage: 'url(/icons/eft/ctrl-q-icon.svg)', maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }}
         />
       </div>
@@ -120,7 +129,7 @@ export function TacticalSearch() {
       {/* Выпадающее меню результатов */}
       {isOpen && (
         // Расширяем контейнер, чтобы вместить сетку (до 1100px), центрируя его относительно инпута
-        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[96vw] max-w-[1100px] mt-2 bg-card-menu/95 backdrop-blur-xl border border-primary/50 rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-[fade-in-up_0.2s_ease-out_both]">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[96vw] max-w-[1100px] mt-2 bg-card-menu/95 backdrop-blur-xl border border-[color-mix(in_srgb,var(--primary)_50%,transparent)] rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-[fade-in-up_0.2s_ease-out_both]">
           
           <div className="max-h-[450px] overflow-y-auto">
             
@@ -134,19 +143,26 @@ export function TacticalSearch() {
                 </div>
                 <ul>
                   {filteredResults.map((item) => (
-                    <li key={item.path}>
+                    <li key={item.id}>
                       <Link 
-                        href={item.path}
+                        href={item.path || '#'}
                         onClick={() => { setIsOpen(false); setQuery(''); }}
-                        className="flex items-center justify-between px-4 py-2.5 hover:bg-primary/10 text-text-secondary hover:text-text-primary transition-colors group/item"
+                      className="flex items-center justify-between px-4 py-2.5 hover:bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-text-secondary hover:text-text-primary transition-colors group/item"
                       >
                         <div className="flex items-center gap-3">
-                          <Command className="w-4 h-4 opacity-40 group-hover/item:text-primary group-hover/item:opacity-100 transition-colors" />
+                          {item.iconUrl ? (
+                            <div 
+                            className={`h-4 w-4 flex-shrink-0 text-text-secondary transition-colors group-hover/item:text-[var(--primary)] ${item.iconClass || 'icon-mask'}`}
+                              style={{ maskImage: `url(${item.iconUrl})`, WebkitMaskImage: `url(${item.iconUrl})` }}
+                            />
+                          ) : (
+                          <Command className="w-4 h-4 opacity-40 group-hover/item:text-[var(--primary)] group-hover/item:opacity-100 transition-colors" />
+                          )}
                           <span className="font-blender-medium uppercase tracking-wider text-sm">
                             {item.label}
                           </span>
                         </div>
-                        <ArrowRight className="w-4 h-4 opacity-0 group-hover/item:opacity-100 group-hover/item:text-primary transition-all -translate-x-2 group-hover/item:translate-x-0" />
+                      <ArrowRight className="w-4 h-4 opacity-0 group-hover/item:opacity-100 group-hover/item:text-[var(--primary)] transition-all -translate-x-2 group-hover/item:translate-x-0" />
                       </Link>
                     </li>
                   ))}
@@ -175,7 +191,7 @@ export function TacticalSearch() {
 
             {/* СОСТОЯНИЕ: ЗАГРУЗКА */}
             {isPending && (
-              <div className="px-4 py-6 flex flex-col items-center justify-center gap-3 text-primary border-t border-lines-hover/50">
+              <div className="px-4 py-6 flex flex-col items-center justify-center gap-3 text-[var(--primary)] border-t border-lines-hover/50">
                 <Loader2 className="w-5 h-5 animate-spin" />
                 <span className="text-[10px] font-blender-medium tracking-widest uppercase">
                   Синхронизация с базой...

@@ -8,12 +8,11 @@ export const metadata: Metadata = {
 
 export default function EftPage() {
   return (
-    <div className="w-full max-w-[1100px] mx-auto py-10 px-4">
+    <div className="w-full max-w-[1132px] mx-auto py-10 px-4">
       
-
       {/* ОСНОВНАЯ СЕТКА */}
       {/* auto-rows-[160px] гарантирует высоту "прямоугольников". Квадраты займут row-span-2 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[28px] md:auto-rows-[160px] justify-items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[28px] md:auto-rows-[160px] justify-items-center animate-[fade-in-up_0.5s_both]">
         
         {/* КАРТЫ (Левый большой блок) */}
         <HubCard

@@ -60,7 +60,7 @@ export default function HomePage() {
         
         {/* Текстовый блок между логотипом и каруселью */}
         {/* Отступ снизу (mb) сделан минимальным, так как карусель уже имеет свой внутренний отступ сверху (py-[42px]) для теней */}
-        <div className="text-center z-10 px-4 mb-12 sm:mb-16 lg:mb-20 shrink-0 flex flex-col items-center w-full">
+        <div className="text-center z-10 px-4 mb-[clamp(10px,1vw,14px)] shrink-0 flex flex-col items-center w-full">
           {/* Обертка для заголовка и декоративных линий */}
           <div className="flex items-center justify-center w-full gap-[16px] lg:gap-[28px] mb-[8px] sm:mb-[10px] md:mb-[12px] lg:mb-[14px]">
             {/* Левая декоративная линия (ПК: 2 колонки 160px + gap 28px = 348px) */}
@@ -79,8 +79,8 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Контейнер карусели: занимает все оставшееся место (flex-grow) и центрирует саму карусель по вертикали (justify-center) */}
-        <div className="w-full flex-grow flex flex-col justify-center min-h-0">
+        {/* Контейнер карусели */}
+        <div className="w-full flex flex-col justify-start min-h-0">
           <Carousel>
             {GAMES_DATA.map((game, index) => (
               <GameCard key={game.id} game={game} isLoading={isLoading} index={index} />
@@ -89,7 +89,7 @@ export default function HomePage() {
         </div>
 
         {/* Второй текстовый блок под каруселью */}
-        <div className="text-center z-10 px-4 mt-12 sm:mt-16 lg:mt-20 mb-0 sm:mb-2 lg:mb-4 shrink-0 flex flex-col items-center w-full">
+        <div className="text-center z-10 px-4 mt-12 lg:mt-[56px] mb-0 sm:mb-2 lg:mb-4 shrink-0 flex flex-col items-center w-full">
           {/* Обертка для заголовка и декоративных линий */}
           <div className="flex items-center justify-center w-full gap-[16px] lg:gap-[28px] mb-[8px] sm:mb-[10px] md:mb-[12px] lg:mb-[14px]">
             {/* Левая декоративная линия */}

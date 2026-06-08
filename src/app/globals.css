@@ -69,22 +69,22 @@
   --shadow-neon: var(--shadow-neon-gzw);
 }
 
-.theme-arcr {
+.theme-arcraiders, .theme-arcr {
   --primary: #8A86FF;
   --shadow-neon: var(--shadow-neon-arcr);
 }
 
-.theme-mrthn {
+.theme-marathon, .theme-mrthn {
   --primary: #C0FE04;
   --shadow-neon: var(--shadow-neon-mrthn);
 }
 
-.theme-actmat {
+.theme-activematter, .theme-actmat {
   --primary: #FFA800;
   --shadow-neon: var(--shadow-neon-actmat);
 }
 
-.theme-wdg {
+.theme-wardogs, .theme-wdg {
   --primary: #E3BD74;
   --shadow-neon: var(--shadow-neon-wdg);
 }
@@ -279,7 +279,7 @@
   }
 
   /* --- Базовые классы для иконок --- */
-  /* Для SVG (позволяет перекрашивать иконку через color текста) */
+  /* Для SVG (позволяет перекрашивать иконку через background-color) */
   .icon-mask {
     display: inline-block;
     background-color: currentColor;
