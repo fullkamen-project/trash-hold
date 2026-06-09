@@ -8,6 +8,17 @@ import Link from 'next/link';
 import { searchEftItemsAction } from '@/actions/search-actions';
 import { SearchItemCard, EftItem } from './SearchItemCard';
 import { SearchEmptyState } from './SearchEmptyState';
+import { usePlayerStore } from './usePlayerStore';
+
+// Хелпер: должна ли иконка сохранять свои оригинальные цвета (без CSS-маски)
+const isColoredIcon = (item: MenuItem, urlToUse?: string) => {
+  if (item.coloredIcon) return true;
+  const targetUrl = urlToUse || item.iconUrl;
+  if (targetUrl?.endsWith('.webp')) return true;
+  if (targetUrl?.includes('/02-quests/')) return true;
+  if (targetUrl?.includes('/gun-modes/')) return true;
+  return false;
+};
 
 export function TacticalSearch() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -21,6 +32,12 @@ export function TacticalSearch() {
   // Состояния для поиска предметов EFT
   const [itemResults, setItemResults] = useState<EftItem[]>([]);
   const [isPending, startTransition] = useTransition();
+
+  // Подключаем хранилище для определения фракции (влияет на иконки оружия)
+  const profiles = usePlayerStore((state) => state.profiles);
+  const activeProfileId = usePlayerStore((state) => state.activeProfileId);
+  const activeProfile = profiles.find((p) => p.id === activeProfileId) || profiles[0];
+  const faction = activeProfile?.faction || 'BEAR';
 
   // Получаем динамический конфиг для текущего раздела
   const config = getHeaderConfig(pathname || '');
@@ -58,14 +75,18 @@ export function TacticalSearch() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Собираем плоский массив всех пунктов (включая вложенные), чтобы поиск находил локации и т.д.
-  const allMenuItems = config.menuItems.reduce((acc: MenuItem[], item) => {
-    acc.push(item);
-    if (item.children) {
-      acc.push(...item.children);
+  // Рекурсивно собираем плоский массив абсолютно ВСЕХ пунктов меню (на любую глубину)
+  const getAllMenuItems = (items: MenuItem[]): MenuItem[] => {
+    let result: MenuItem[] = [];
+    for (const item of items) {
+      result.push(item);
+      if (item.children) {
+        result = result.concat(getAllMenuItems(item.children));
+      }
     }
-    return acc;
-  }, []);
+    return result;
+  };
+  const allMenuItems = getAllMenuItems(config.menuItems);
 
   // Если запрос пуст — показываем только основные разделы. Иначе ищем по всем пунктам.
   const filteredResults = query.trim().length === 0
@@ -150,14 +171,21 @@ export function TacticalSearch() {
                       className="flex items-center justify-between px-4 py-2.5 hover:bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-text-secondary hover:text-text-primary transition-colors group/item"
                       >
                         <div className="flex items-center gap-3">
-                          {item.iconUrl ? (
-                            <div 
-                            className={`h-4 w-4 flex-shrink-0 text-text-secondary transition-colors group-hover/item:text-[var(--primary)] ${item.iconClass || 'icon-mask'}`}
-                              style={{ maskImage: `url(${item.iconUrl})`, WebkitMaskImage: `url(${item.iconUrl})` }}
-                            />
-                          ) : (
-                          <Command className="w-4 h-4 opacity-40 group-hover/item:text-[var(--primary)] group-hover/item:opacity-100 transition-colors" />
-                          )}
+                          {(() => {
+                            const iconToUse = (faction === 'USEC' && item.iconUrlUsec) ? item.iconUrlUsec : ((faction === 'BEAR' && item.iconUrlBear) ? item.iconUrlBear : item.iconUrl);
+                            return iconToUse ? (
+                              isColoredIcon(item, iconToUse) ? (
+                                <img src={iconToUse} alt="" className="h-4 w-4 flex-shrink-0 object-contain" />
+                              ) : (
+                                <div 
+                                  className={`h-4 w-4 flex-shrink-0 text-text-secondary transition-colors group-hover/item:text-[var(--primary)] ${item.iconClass || 'icon-mask'}`}
+                                  style={{ maskImage: `url(${iconToUse})`, WebkitMaskImage: `url(${iconToUse})`, maskSize: 'contain', maskPosition: 'center', maskRepeat: 'no-repeat' }}
+                                />
+                              )
+                            ) : (
+                              <Command className="w-4 h-4 opacity-40 group-hover/item:text-[var(--primary)] group-hover/item:opacity-100 transition-colors" />
+                            );
+                          })()}
                           <span className="font-blender-medium uppercase tracking-wider text-sm">
                             {item.label}
                           </span>

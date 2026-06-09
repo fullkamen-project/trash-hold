@@ -149,7 +149,7 @@ export function ProfileSettingsModal({ isOpen, onClose, edition, setEdition, fac
           <div className="flex h-7 w-7 items-center justify-center p-1.5">
             <div className="h-full w-full icon-mask icon-eft-profile-settings text-[#9CA3AF]" />
           </div>
-          <div className="text-sm font-blender-medium leading-4 text-zinc-100">Настройки профиля игрока</div>
+          <div className="text-sm font-blender-medium leading-4 text-zinc-100">Настройки профиля ЧВК</div>
           
           {/* Кнопка закрытия */}
           <button onClick={onClose} className="absolute right-0 top-0 h-7 w-7 flex items-center justify-center transition-opacity hover:opacity-80">

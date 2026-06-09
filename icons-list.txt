@@ -1,5 +1,5 @@
 === ТВОЙ ШАБЛОН ИКОНОК ===
-
+- [КОНЕЦ ПУТИ] (/icons/eft/01-maps/end-of-line-map-icon.svg)
 - [ТАМОЖНЯ] (/icons/eft/01-maps/customs-map-icon.svg)
 - [ЗАВОД] (/icons/eft/01-maps/factory-map-icon.svg)
 - [ЭПИЦЕНТР] (/icons/eft/01-maps/groundzero-map-icon.svg)
@@ -49,7 +49,7 @@
 - [КЕЙСЫ] (/icons/eft/03-items/equipment/containers/cases.svg)
 - [ЗАЩИЩЕННЫЕ] (/icons/eft/03-items/equipment/containers/secure-containers.svg)
 - [КОНТЕЙНЕРЫ] (/icons/eft/03-items/equipment/containers.svg)
-- [ИНФО ПРЕДМЕТЫ] (/icons/eft/03-items/equipment/infoitems.svg)
+- [ИНФОПРЕДМЕТЫ] (/icons/eft/03-items/equipment/infoitems.svg)
 - [КЛЮЧ-КАРТЫ] (/icons/eft/03-items/equipment/keys/key-cards.svg)
 - [МЕЧЕННЫЕ] (/icons/eft/03-items/equipment/keys/mechanical-keys/marked-keys.svg)
 - [КЛЮЧИ ДЛЯ ЗАДАНИЙ] (/icons/eft/03-items/equipment/keys/mechanical-keys/quest-keys.svg)
@@ -116,6 +116,7 @@
 - [ПИСТОЛЕТЫ-ПУЛЕМЕТЫ BEAR] (/icons/eft/03-items/guns/gun-types/smg-bear.svg)
 - [ПИСТОЛЕТЫ-ПУЛЕМЕТЫ USEC] (/icons/eft/03-items/guns/gun-types/smg_usec.svg)
 - [ОРУЖИЕ] (/icons/eft/03-items/guns.svg)
+- [ОГНЕСТРЕЛЬНОЕ] (/icons/eft/03-items/guns.svg)
 - [РЕЙТИНГ ПРЕДМЕТОВ] (/icons/eft/03-items/loot-tier.svg)
 - [ЦЕНА ЗА СЛОТ] (/icons/eft/03-items/price-per-slot.svg)
 - [ДОСТИЖЕНИЯ] (/icons/eft/04-progression/achievments.svg)
@@ -152,7 +153,8 @@
 - [ХРОНОЛОГИЯ СОБЫТИЙ] (/icons/eft/05-gamesetting/timeline.svg)
 - [ТОРГОВЦЫ] (/icons/eft/05-gamesetting/traders.svg)
 - [ПРЯМЫЕ ЭФИРЫ] (/icons/eft/06-videos/live-streams.svg)
-- [ВИДЕО] (/icons/eft/06-videos/video-advices.svg)
+- [CОВЕТЫ] (/icons/eft/06-videos/video-advices.svg)
+- [ВИДЕО] (/icons/eft/06-videos/videos-icon.svg)
 - [ВИДЕОГАЙДЫ] (/icons/eft/06-videos/video-guides.svg)
 - [ВИДЕОНОВОСТИ] (/icons/eft/06-videos/video-news.svg)
 - [ФРАКЦИЯ BEAR] (/icons/eft/BEAR-faction-icon.svg)
@@ -198,6 +200,7 @@
 - [ТАРКОВ ФОН] (/icons/eft/tarkov-city-bg.svg)
 - [ФРАКЦИЯ USEC] (/icons/eft/USEC-faction-icon.svg)
 - [ИКОНКА ВИДЕО] (/icons/eft/videos-icon.svg)
+- [ПРЕДМЕТЫ] (/icons/eft/03-items/loot-tier.svg)
 
 
 
