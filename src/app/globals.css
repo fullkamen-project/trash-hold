@@ -325,17 +325,17 @@
   .icon-eft-maps-woods { mask-image: url('/icons/eft/01-maps/woods-map-icon.svg'); -webkit-mask-image: url('/icons/eft/01-maps/woods-map-icon.svg'); }
 
   /* === EFT Квесты и Торговцы (02-quests) === */
-  .icon-eft-quests-btrdriver { background-image: url('/icons/eft/02-quests/btrdriver_16x16.jpg'); }
-  .icon-eft-quests-fence { background-image: url('/icons/eft/02-quests/fence_16x16.jpg'); }
-  .icon-eft-quests-jaeger { background-image: url('/icons/eft/02-quests/jaeger_16x16.jpg'); }
-  .icon-eft-quests-lightkeeper { background-image: url('/icons/eft/02-quests/lightkeeper_16x16.jpg'); }
-  .icon-eft-quests-mechanic { background-image: url('/icons/eft/02-quests/mechanic_16x16.jpg'); }
-  .icon-eft-quests-peacekeeper { background-image: url('/icons/eft/02-quests/peacekeeper_16x16.jpg'); }
-  .icon-eft-quests-prapor { background-image: url('/icons/eft/02-quests/prapor_16x16.jpg'); }
-  .icon-eft-quests-ragman { background-image: url('/icons/eft/02-quests/ragman_16x16.jpg'); }
-  .icon-eft-quests-ref { background-image: url('/icons/eft/02-quests/ref_16x16.jpg'); }
-  .icon-eft-quests-skier { background-image: url('/icons/eft/02-quests/skier_16x16.jpg'); }
-  .icon-eft-quests-therapist { background-image: url('/icons/eft/02-quests/therapist_16x16.jpg'); }
+  .icon-eft-quests-btrdriver { background-image: url('/icons/eft/02-quests/btrdriver_16x16.webp'); }
+  .icon-eft-quests-fence { background-image: url('/icons/eft/02-quests/fence_16x16.webp'); }
+  .icon-eft-quests-jaeger { background-image: url('/icons/eft/02-quests/jaeger_16x16.webp'); }
+  .icon-eft-quests-lightkeeper { background-image: url('/icons/eft/02-quests/lightkeeper_16x16.webp'); }
+  .icon-eft-quests-mechanic { background-image: url('/icons/eft/02-quests/mechanic_16x16.webp'); }
+  .icon-eft-quests-peacekeeper { background-image: url('/icons/eft/02-quests/peacekeeper_16x16.webp'); }
+  .icon-eft-quests-prapor { background-image: url('/icons/eft/02-quests/prapor_16x16.webp'); }
+  .icon-eft-quests-ragman { background-image: url('/icons/eft/02-quests/ragman_16x16.webp'); }
+  .icon-eft-quests-ref { background-image: url('/icons/eft/02-quests/ref_16x16.webp'); }
+  .icon-eft-quests-skier { background-image: url('/icons/eft/02-quests/skier_16x16.webp'); }
+  .icon-eft-quests-therapist { background-image: url('/icons/eft/02-quests/therapist_16x16.webp'); }
   
   .icon-eft-quests-events { mask-image: url('/icons/eft/02-quests/ingame-events.svg'); -webkit-mask-image: url('/icons/eft/02-quests/ingame-events.svg'); }
   .icon-eft-quests-lore { mask-image: url('/icons/eft/02-quests/lore-quests.svg'); -webkit-mask-image: url('/icons/eft/02-quests/lore-quests.svg'); }
@@ -501,17 +501,17 @@
   .icon-eft-profile-rep-2 { mask-image: url('/icons/eft/profile_pannel/II-lvl-rep.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/II-lvl-rep.svg'); }
   .icon-eft-profile-rep-3 { mask-image: url('/icons/eft/profile_pannel/III-lvl-rep.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/III-lvl-rep.svg'); }
   .icon-eft-profile-rep-4 { mask-image: url('/icons/eft/profile_pannel/IV-Crown.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/IV-Crown.svg'); }
-  .icon-eft-profile-kappa { mask-image: url('/icons/eft/profile_pannel/kappa_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/kappa_icon.svg'); }
+  .icon-eft-profile-kappa { background-image: url('/icons/eft/profile_pannel/kappa_icon.svg'); }
   .icon-eft-profile-lb { mask-image: url('/icons/eft/profile_pannel/LB_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/LB_icon.svg'); }
-  .icon-eft-profile-lightkeeper { mask-image: url('/icons/eft/profile_pannel/lightkeeper_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/lightkeeper_icon.svg'); }
+  .icon-eft-profile-lightkeeper { background-image: url('/icons/eft/profile_pannel/lightkeeper_icon.svg'); }
   .icon-eft-profile-login { mask-image: url('/icons/eft/profile_pannel/login-icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/login-icon.svg'); }
   .icon-eft-profile-logout { mask-image: url('/icons/eft/profile_pannel/logout-icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/logout-icon.svg'); }
   .icon-eft-profile-loot-mark { mask-image: url('/icons/eft/profile_pannel/loot-mark-unheard.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/loot-mark-unheard.svg'); }
   .icon-eft-profile-pfe { mask-image: url('/icons/eft/profile_pannel/PFE_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/PFE_icon.svg'); }
-  .icon-eft-profile-settings { mask-image: url('/icons/eft/profile_pannel/profile-pannel-settings.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/profile-pannel-settings.svg'); }
+  .icon-eft-profile-settings { mask-image: url('/icons/eft/profile_pannel/profile-settings-icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/profile-settings-icon.svg'); }
   .icon-eft-profile-reset { mask-image: url('/icons/eft/profile_pannel/profile-reset-icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/profile-reset-icon.svg'); }
-  .icon-eft-profile-pve { mask-image: url('/icons/eft/profile_pannel/PVE_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/PVE_icon.svg'); }
-  .icon-eft-profile-pvp { mask-image: url('/icons/eft/profile_pannel/PVP_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/PVP_icon.svg'); }
+  .icon-eft-profile-pve { background-image: url('/icons/eft/profile_pannel/PVE_icon.svg'); }
+  .icon-eft-profile-pvp { background-image: url('/icons/eft/profile_pannel/PVP_icon.svg'); }
   .icon-eft-profile-s { mask-image: url('/icons/eft/profile_pannel/S_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/S_icon.svg'); }
   .icon-eft-profile-tue { mask-image: url('/icons/eft/profile_pannel/TUE_icon.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/TUE_icon.svg'); }
   .icon-eft-profile-usec-logo { mask-image: url('/icons/eft/profile_pannel/USEC-logo-sign.svg'); -webkit-mask-image: url('/icons/eft/profile_pannel/USEC-logo-sign.svg'); }

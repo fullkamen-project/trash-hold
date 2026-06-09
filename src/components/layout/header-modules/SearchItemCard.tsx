@@ -51,7 +51,7 @@ export function SearchItemCard({ item }: { item: EftItem }) {
       {/* Центр: Изображение */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img 
-        src={item.iconLink || 'https://assets.tarkov.dev/5c05300686f774697940d43f-grid-image.jpg'} 
+        src={item.iconLink || 'https://assets.tarkov.dev/5c05300686f774697940d43f-grid-image.webp'} 
         alt={item.name} 
         className="w-14 h-14 object-contain mx-auto transition-transform duration-300 group-hover:scale-110 drop-shadow-md" 
       />
