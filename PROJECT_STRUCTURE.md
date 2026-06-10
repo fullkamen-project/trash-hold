@@ -33,7 +33,11 @@ src/
 │
 ├── data/
 │   ├── games.ts               # Данные для карточек игр на главной
-│   └── headerConfig.ts        # Конфигурация хедера (меню, поиск, валюта, хлебные крошки)
+│   ├── headerConfig.ts        # Конфигурация хедера (сборка меню, поиск, валюта)
+│   ├── slang.ts               # Словарь игрового сленга для поиска
+│   └── navigation/            # Модули навигации для разных игр
+│       ├── eft.ts             # Дерево меню для EFT (300+ строк)
+│       └── other-games.ts     # Дерево меню для остальных игр
 │
 ├── hooks/
 │   └── useIntersectionObserver.ts # Хук для ленивой загрузки (видео в карточках)
@@ -41,6 +45,9 @@ src/
 ├── lib/
 │   ├── eft-api.ts             # Интеграция с tarkov.dev GraphQL
 │   └── search-engine.ts       # Движок поиска с поддержкой игрового сленга
+│
+├── store/
+│   └── usePlayerStore.ts      # Zustand-хранилище профилей (Глобальный стейт)
 │
 ├── components/
 │   ├── layout/                # Глобальный каркас приложения
@@ -56,7 +63,6 @@ src/
 │   │   │   ├── ProfileSettingsModal.tsx # Настройки профиля ЧВК
 │   │   │   ├── ProfileResetModal.tsx    # Модалка сброса прогресса
 │   │   │   ├── ProfileDeleteModal.tsx   # Модалка удаления ЧВК
-│   │   │   ├── usePlayerStore.ts      # Zustand-хранилище профилей
 │   │   │   ├── StreamStatus.tsx
 │   │   │   ├── NewbieButton.tsx
 │   │   │   └── NewbieModal.tsx
@@ -71,6 +77,9 @@ src/
 │   │   └── ThemeProvider.tsx  # Управление глобальной темой (классы theme-*)
 │   ├── ColorPaletteDevTool.tsx# Инструмент разработчика для настройки палитры "на лету"
 │   └── PlaceholderPage.tsx    # Универсальная страница-заглушка "В разработке"
+│
+├── styles/
+│   └── icons.css              # Вынесенные CSS-классы для иконок
 │
 └── app/                       # РОУТИНГ (App Router)
     ├── globals.css            # Глобальные стили, шрифты, токены темы и анимации
